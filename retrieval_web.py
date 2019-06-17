@@ -13,8 +13,7 @@ def index():
 
 @app.route('/search_index', methods=['POST'])
 def search_index():
-    # query_search()
-    some_results = list()
+    some_results = query_search()
     pass
     return render_template('index.html', results=some_results)
 
