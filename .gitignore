@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Pycharm files
+.idea/
+
+# Server information
+server.json
+
+
+index/
