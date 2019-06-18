@@ -1,0 +1,3 @@
+jsonrpcserver>=4,<5
+jsonrpcclient[requests]
+Flask

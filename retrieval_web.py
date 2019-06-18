@@ -1,51 +1,29 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template, send_from_directory, url_for, redirect, request, jsonify
-from api_request import query_search, add_sponsor_movie
+from flask import Flask, request, Response
+from jsonrpcserver import dispatch, method
+import requests
+
+SOLR_HOST = ""
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/search_index', methods=['POST'])
-def search_index():
-    some_results = query_search()
+@method
+def query_search(query_text: str):
     pass
-    return render_template('index.html', results=some_results)
-
-
-@app.route('/show_result', methods=['POST'])
-def show_movie_info():
-    # some_movie - json with movie info
-    some_movie = dict()
-    pass
-
-    return render_template('movie_info.html', movie=some_movie)
-
-
-@app.route('/choose_sponsor', methods=['POST'])
-def choose_sponsor():
-    return render_template('sponsor.html')
-
-
-@app.route('/search_sponsor', methods=['POST'])
-def search_sponsor():
-    # query_search()
-    some_results = list()
-    pass
-    return render_template('sponsor.html', results=some_results)
-
-
-@app.route('/add_sponsor', methods=['POST'])
-def add_sponsor_button():
-    # add_sponsor_movie()
-    pass
+    # query_string = "http://" + SOLR_HOST
+    # res = requests.get(query_string)
+    # query_result = res.json()
     return
 
 
+@app.route("/", methods=['GET', 'POST'])
+def index():
+    req = request.get_data().decode()
+    response = dispatch(req)
+    return Response(str(response), response.http_status, mimetype="application/json")
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5002)
