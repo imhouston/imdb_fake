@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
 from flask import Flask, request, jsonify, Response
+from flask_cors import CORS, cross_origin
 
 SOLR_HOST = ""
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 def query_search(query_json: dict):
@@ -46,6 +49,7 @@ def query_search(query_json: dict):
 
 
 @app.route("/search", methods=['POST'])
+@cross_origin()
 def search_api():
     if request.is_json:
         try:
